@@ -1,0 +1,87 @@
+外网访问设置:
+httpd.conf文件
+
+1. 注释掉 line 243:
+  #Require all denied
+
+在其后添加
+  Order deny,allow
+  Allow from all
+---------完整语句------------
+<Directory />
+  # Options FollowSymLinks
+  AllowOverride None
+  # Require all denied
+  Order deny,allow
+  #Deny from all
+  Allow from all
+  # Satisfy all
+  #Allow from localhost
+  #Allow from 127.0.0.1
+</Directory>
+------------------------------
+
+2.在line255左右  类似于:<Directory "d:/wamp/www/">
+
+给以下加注释
+#Require local
+并添加如下
+Order Deny,Allow
+Allow from all
+
+---------完整语句------------
+<Directory "d:/wamp/www/">
+  Options Indexes FollowSymLinks
+  AllowOverride all
+  Order Deny,Allow
+  #Deny from all
+  Allow from all
+  Allow from localhost
+  Allow from 127.0.0.1
+</Directory>
+
+===============================
+只有本机可访问:
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+
+<Directory "d:/wamp/www/">
+  Options Indexes FollowSymLinks
+  AllowOverride all
+  Require local
+</Directory>
+
+
+
+
+修改apach配置文件httpd.conf
+	1.
+	<Directory />
+		Options FollowSymLinks
+    		AllowOverride None
+    		Order deny,allow
+    		Allow from all
+    		Satisfy all
+	</Directory>
+	<Directory "d:/wamp/www/">
+		Options Indexes FollowSymLinks
+		AllowOverride all
+		Order Deny,Allow
+		Allow from all
+	</Directory>
+
+
+
+-----------------------------------------------
+wamp  3.0.4
+外网访问: 
+
+httpd-vhost.conf 文件:
+#Require local
+Require all granted
+
+重启即可.
+
+
